@@ -29,22 +29,22 @@ def _get_train_dataloader(dataset_dir, train_batch_size, data_collator=None, is_
     )
 ```
 ```python
-model.train()for _ in range(args.epochs):
-    with tqdm(train_dataloader, unit="batch") as training_epoch:
-        for batch in training_epoch:
 
-            batch = {k: v.to(device) for k, v in batch.items()}
-            outputs = model(**batch)
+with tqdm(train_dataloader, unit="batch") as training_epoch:
+    for batch in training_epoch:
 
-            loss = outputs.loss
-            loss.backward()
+        batch = {k: v.to(device) for k, v in batch.items()}
+        outputs = model(**batch)
 
-            optimizer.step()
-            lr_scheduler.step()
-            optimizer.zero_grad()
+        loss = outputs.loss
+        loss.backward()
 
-            correct = training_performance(outputs, batch)
-            accuracy = correct / args.train_batch_size
+        optimizer.step()
+        lr_scheduler.step()
+        optimizer.zero_grad()
 
-            training_epoch.set_postfix(loss=loss.item(), accuracy=100. * accuracy)
+        correct = training_performance(outputs, batch)
+        accuracy = correct / args.train_batch_size
+
+        training_epoch.set_postfix(loss=loss.item(), accuracy=100. * accuracy)
 ```
