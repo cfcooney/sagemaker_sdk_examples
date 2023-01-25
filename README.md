@@ -5,6 +5,8 @@ Working with HuggingFace and PyTorch models alongside SageMaker tools such as [E
 
 ## Fine-tune HuggingFace models with SageMaker HuggingFace Estimator
 
+Fine-tuning DistilBERT on IMDB dataset using two different approaches to training:
+
 * huggingface_estimator.ipynb uses HuggingFace Estimator with the HuggingFace [Trainer class](https://huggingface.co/docs/transformers/main_classes/trainer).
 * estimator_for_bespoke.ipynb uses HuggingFace Estimator with a native PyTorch training script, allowing more control over aspects of the training procedure.
 
