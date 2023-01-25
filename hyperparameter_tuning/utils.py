@@ -1,3 +1,5 @@
+import boto3
+
 def summarize_hpo_results(tuning_job_name):
     """
     Query tuning results and display the best score,
