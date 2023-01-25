@@ -5,4 +5,4 @@ Working with HuggingFace and PyTorch models alongside SageMaker tools such as Es
 
 ## Fine-tune HuggingFace models with SageMaker HuggingFace Estimator
 
-* huggingface_estimator.ipynb uses HuggingFace Estimator with the HuggingFace [Trainer class]('https://huggingface.co/docs/transformers/main_classes/trainer')
+* huggingface_estimator.ipynb uses HuggingFace Estimator with the HuggingFace [Trainer class](https://huggingface.co/docs/transformers/main_classes/trainer)
