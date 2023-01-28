@@ -59,3 +59,7 @@ Optimize hyperparameter values when fine-tuning HuggingFace models:
 * tuning_with_hf_trainer.ipynb employs a 'Random' tuning strategy and relies on the HuggingFace Trainer class for training.
 
 Tuning job results are analysed and the best model deployed for inference, and used to make predictions.
+
+## SageMaker Experiments to track and analyse different training jobs
+
+Track experimental runs in a systematic fashion with logging and analysis tools provided by AWS.
