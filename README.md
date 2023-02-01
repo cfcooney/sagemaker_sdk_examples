@@ -53,6 +53,8 @@ with tqdm(train_dataloader, unit="batch") as training_epoch:
 
 ## Perform hyperparameter tuning on HuggingFace models with SageMaker HyperparameterTuner
 
+Blog post associated with this tuning available [here](https://ciaranfcooney.medium.com/hyperparameter-tuning-of-huggingface-models-with-aws-sagemaker-sdk-f727ac06cf36)
+
 Optimize hyperparameter values when fine-tuning HuggingFace models:
 
 * hyperparameter_tuning.ipynb uses HuggingFace Estimator, HyperparameterTuner, and training_script.py to optimize hp values. A 'Bayesian' tuning strategy is employed and the training script is native PyTorch (as above).
