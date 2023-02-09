@@ -57,7 +57,8 @@ Blog post associated with this tuning available [here](https://ciaranfcooney.med
 
 Optimize hyperparameter values when fine-tuning HuggingFace models:
 
-* hyperparameter_tuning.ipynb uses HuggingFace Estimator, HyperparameterTuner, and training_script.py to optimize hp values. A 'Bayesian' tuning strategy is employed and the training script is native PyTorch (as above).
+* hyperparameter_tuning.ipynb uses HuggingFace Estimator, HyperparameterTuner, and training_script.py to optimize hp values. A 'Bayesian' tuning strategy is employed and the training script is native PyTorch (as above). Uses the IMDB dataset.
+* hyperparameter_tuning_tweet_eval.ipynb uses HuggingFace Estimator, HyperparameterTuner, and training_script.py to optimize hp values. A 'Bayesian' tuning strategy is employed and the training script is native PyTorch (as above). Uses the tweet_eval dataset.
 * tuning_with_hf_trainer.ipynb employs a 'Random' tuning strategy and relies on the HuggingFace Trainer class for training.
 
 Tuning job results are analysed and the best model deployed for inference, and used to make predictions.
