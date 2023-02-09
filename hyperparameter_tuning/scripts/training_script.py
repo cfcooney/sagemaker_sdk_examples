@@ -66,7 +66,7 @@ def train(args):
     logger.debug(f"Processes {len(train_dataloader.sampler)}/{len(train_dataloader.dataset)} ({100.0 * len(train_dataloader.sampler) / len(train_dataloader.dataset)}%) of train data")
     logger.debug(f"Processes {len(test_dataloader.sampler)}/{len(test_dataloader.dataset)} ({100.0 * len(test_dataloader.sampler) / len(test_dataloader.dataset)}%) of test data")
     
-    model = AutoModelForSequenceClassification.from_pretrained(args.model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(args.model_name, num_labels=args.num_labels)
     
     model.to(device)
         
@@ -100,7 +100,7 @@ def train(args):
 
                 training_epoch.set_postfix(loss=loss.item(), accuracy=100. * accuracy)
             
-            evaluate_model(model, test_dataloader, device)
+            evaluate_model(model, test_dataloader, device, args)
 
     save_model(model, tokenizer, args.model_dir)
     logger.info(f"Made it this far")
@@ -114,11 +114,12 @@ def training_performance(outputs, batch):
     correct += predictions.eq(labels.view_as(predictions)).sum().item()
     return correct
 
-def evaluate_model(model, test_dataloader, device):
+def evaluate_model(model, test_dataloader, device, args):
     """Evaluate model on test set and print to logger."""
     logger.info(f"Evaluating...")
-
-    metric = evaluate.load("glue", "mrpc")
+    
+    average = "weighted" if args.num_labels > 2 else None
+    metric = evaluate.load(args.metric)
     model.eval()
     for batch in test_dataloader:
         batch = {k: v.to(device) for k, v in batch.items()}
@@ -129,7 +130,7 @@ def evaluate_model(model, test_dataloader, device):
         predictions = th.argmax(logits, dim=-1)
         metric.add_batch(predictions=predictions,  references=batch.pop("labels"))
     test_loss = compute_loss(model, test_dataloader, device)
-    logger.info(f"{metric.compute()} - loss = {test_loss}")
+    logger.info(f"{metric.compute(average=average)} - loss = {test_loss}")
 
 
 def compute_loss(model, test_dataloader, device):
@@ -178,6 +179,8 @@ if __name__ == '__main__':
     parser.add_argument("--adam_betas", type=tuple, default=(0.9, 0.999), help="Beta values for AdamW optimizers. Default=(0.9, 0.999)")
     parser.add_argument("--adafactor_eps", type=tuple, default=(1e-30, 0.001), help="Epsilon values for AdaFactor optimizer. Default=(1e-30, 0.001)")
     parser.add_argument("--clip_threshold", type=float, default=1.0, help="AdaFacto cplip threshold. Default=1.0")
+    parser.add_argument("--num_labels", type=int, default=2, help="Number of labels for classification. Default=2")
+    parser.add_argument("--metric", type=str, default="f1", help="Evaluation metric for classifcation task. Default='f1'")
 
 
      # Container environment
